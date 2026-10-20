@@ -1,0 +1,986 @@
+/* ==========================================================================
+   1. CSS Custom Properties (Design Tokens)
+   ========================================================================== */
+:root {
+    /* Color Palette - Warm Academic & Trustworthy */
+    --bg-primary: #FAF7F2;
+    /* Soft warm off-white */
+    --bg-secondary: #F2ECE1;
+    /* Warm sand/beige for alternating sections */
+    --bg-surface: #FFFFFF;
+    /* Pure white for cards & inputs */
+    --bg-footer: #1A2634;
+    /* Deep slate navy for footer */
+
+    /* Typography Colors */
+    --text-primary: #1E2D3D;
+    /* Deep navy-slate for headings & body */
+    --text-secondary: #4A5B6C;
+    /* Muted slate for supporting copy */
+    --text-muted: #6E7E8F;
+    /* Subtle grey-slate for captions */
+    --text-inverse: #FAF7F2;
+    /* Light text on dark backgrounds */
+
+    /* Accent Colors */
+    --accent-primary: #3A6351;
+    /* Muted earthy sage green */
+    --accent-primary-hover: #2C4E3F;
+    /* Darker sage for hover states */
+    --accent-primary-light: #E6EFEA;
+    /* Soft sage tint for icon backgrounds */
+    --accent-secondary: #B85D43;
+    /* Muted terracotta for badges & highlights */
+    --accent-secondary-light: #F7EAE6;
+
+    /* Semantic & Feedback Colors */
+    --border-color: #E2DBD0;
+    /* Warm subtle border */
+    --border-focus: #3A6351;
+    --error-color: #B93829;
+    --error-bg: #FDF2F1;
+    --success-color: #2E6F40;
+    --success-bg: #EDF7F0;
+    --whatsapp-green: #25D366;
+    --whatsapp-hover: #1EBE5B;
+
+    /* Typography */
+    --font-heading: 'Lora', Georgia, serif;
+    --font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Layout & Spacing */
+    --container-max: 1140px;
+    --header-height: 72px;
+    --mobile-nav-height: 68px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    /* Subtle, Non-Glow Shadows */
+    --shadow-sm: 0 2px 6px rgba(30, 45, 61, 0.05);
+    --shadow-md: 0 6px 18px rgba(30, 45, 61, 0.07);
+    --shadow-nav: 0 -2px 12px rgba(30, 45, 61, 0.08);
+    --transition-base: 0.22s ease-in-out;
+}
+
+/* ==========================================================================
+   2. Reset & Base Styles (Mobile-First)
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 16px);
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    line-height: 1.65;
+    /* Reserve space at the bottom on mobile so the fixed bottom nav never hides content */
+    padding-bottom: var(--mobile-nav-height);
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    line-height: 1.25;
+    font-weight: 600;
+}
+
+/* Keyboard Accessibility Focus Ring */
+:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+}
+
+/* ==========================================================================
+   3. Reusable Layout Utilities & Buttons
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+}
+
+.section-padding {
+    padding-block: 4rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-header {
+    max-width: 680px;
+    margin-inline: auto;
+    margin-bottom: 2.75rem;
+}
+
+.section-tag {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-secondary);
+    background-color: var(--accent-secondary-light);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.75rem;
+}
+
+.section-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+    margin-bottom: 0.85rem;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background-color var(--transition-base),
+        color var(--transition-base),
+        border-color var(--transition-base),
+        transform 0.15s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-primary-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    padding: 0.55rem 1.15rem;
+    font-size: 0.875rem;
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. Header & Adaptive Navigation (Mobile Bottom Bar / Desktop Top Bar)
+   ========================================================================== */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    height: var(--header-height);
+    background-color: rgba(250, 247, 242, 0.96);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(6px);
+}
+
+.header-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* Hide desktop header CTA button on small mobile screens to keep top bar clean */
+.header-cta {
+    display: none;
+}
+
+/* --- Mobile App-Like Fixed Bottom Navigation --- */
+.main-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--mobile-nav-height);
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    box-shadow: var(--shadow-nav);
+    z-index: 1000;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.nav-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    width: 100%;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    position: relative;
+    transition: color var(--transition-base);
+}
+
+.nav-icon {
+    font-size: 1.15rem;
+    transition: transform var(--transition-base);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent-primary);
+}
+
+/* Active top indicator bar on mobile bottom nav */
+.nav-link.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 36px;
+    height: 3px;
+    background-color: var(--accent-primary);
+    border-radius: 0 0 4px 4px;
+}
+
+.nav-link.active .nav-icon {
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5. Hero Section
+   ========================================================================== */
+.hero-section {
+    padding-block: 3.5rem 4rem;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 760px;
+    text-align: center;
+}
+
+.eyebrow-badge {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent-primary);
+    background-color: var(--accent-primary-light);
+    border: 1px solid rgba(58, 99, 81, 0.2);
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.015em;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.02rem, 2vw, 1.18rem);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    justify-content: center;
+    margin-bottom: 2.25rem;
+}
+
+.hero-trust-notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trust-item i {
+    color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   6. About the Head Teacher Section
+   ========================================================================== */
+.about-section {
+    background-color: var(--bg-primary);
+}
+
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+    align-items: center;
+}
+
+.about-image-wrapper {
+    position: relative;
+    max-width: 360px;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.teacher-portrait {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid var(--bg-secondary);
+    box-shadow: var(--shadow-md);
+}
+
+.experience-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: -1.75rem;
+    position: relative;
+    z-index: 2;
+}
+
+.exp-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-secondary);
+    font-weight: 700;
+}
+
+.exp-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.about-lead {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    border-left: 3px solid var(--accent-secondary);
+    padding-left: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.about-text {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.teacher-pillars {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.75rem;
+}
+
+.pillar-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: var(--bg-secondary);
+    padding: 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.pillar-icon {
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+    background-color: var(--bg-surface);
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.pillar-title {
+    font-size: 1.02rem;
+    margin-bottom: 0.25rem;
+}
+
+.pillar-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   7. Key Features & USPs Section
+   ========================================================================== */
+.features-section {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background-color: var(--accent-primary-light);
+    color: var(--accent-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.15rem;
+}
+
+.feature-title {
+    font-size: 1.18rem;
+    margin-bottom: 0.6rem;
+}
+
+.feature-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   8. Location & Contact Section
+   ========================================================================== */
+.contact-section {
+    background-color: var(--bg-primary);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.contact-form-card,
+.contact-details-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-subheading {
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+}
+
+.card-subtext {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+}
+
+.required-star {
+    color: var(--error-color);
+}
+
+.form-control {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.9rem;
+    transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background-color: var(--bg-surface);
+}
+
+/* JS Validation States */
+.form-control.input-error {
+    border-color: var(--error-color);
+    background-color: var(--error-bg);
+}
+
+.error-message {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--error-color);
+    font-weight: 500;
+    margin-top: 0.3rem;
+    min-height: 1.1rem;
+}
+
+.form-status {
+    display: none;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.15rem;
+}
+
+.form-status.success {
+    display: block;
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border: 1px solid rgba(46, 111, 64, 0.25);
+}
+
+.form-status.error {
+    display: block;
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    border: 1px solid rgba(185, 56, 41, 0.25);
+}
+
+/* Direct Info & Map Column */
+.contact-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    margin-top: 1.1rem;
+}
+
+.contact-info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+
+.info-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background-color: var(--accent-primary-light);
+    color: var(--accent-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+
+.contact-info-list strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.contact-info-list p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.contact-info-list a {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.contact-info-list a:hover {
+    text-decoration: underline;
+}
+
+.map-container {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    background-color: var(--bg-secondary);
+    line-height: 0;
+}
+
+/* ==========================================================================
+   9. Footer
+   ========================================================================== */
+.site-footer {
+    background-color: var(--bg-footer);
+    color: var(--text-inverse);
+    padding-top: 3rem;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding-bottom: 2.25rem;
+}
+
+.footer-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.footer-tagline {
+    font-size: 0.9rem;
+    color: #B0BECB;
+    margin-top: 0.35rem;
+}
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.social-link:hover {
+    background-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-block: 1.25rem;
+    text-align: center;
+    font-size: 0.84rem;
+    color: #94A3B8;
+}
+
+/* ==========================================================================
+   10. Floating WhatsApp Button (Mobile Bottom-Bar Safe)
+   ========================================================================== */
+.whatsapp-float {
+    position: fixed;
+    /* Sits cleanly above the 68px fixed bottom navigation bar on mobile */
+    bottom: calc(var(--mobile-nav-height) + 16px);
+    right: 1.15rem;
+    z-index: 950;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--whatsapp-green);
+    color: #FFFFFF;
+    padding: 0.75rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.32);
+    transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.whatsapp-float:hover {
+    background-color: var(--whatsapp-hover);
+    transform: translateY(-2px);
+}
+
+.whatsapp-icon {
+    font-size: 1.55rem;
+    line-height: 1;
+}
+
+.whatsapp-tooltip {
+    display: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding-right: 0.35rem;
+}
+
+/* ==========================================================================
+   11. Responsive Breakpoints (Tablet & Desktop)
+   ========================================================================== */
+
+/* Small Tablets & Up (min-width: 640px) */
+@media (min-width: 640px) {
+    .hero-actions {
+        flex-direction: row;
+    }
+
+    .hero-trust-notes {
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .teacher-pillars {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .whatsapp-tooltip {
+        display: inline;
+    }
+}
+
+/* Desktop Navigation & Layout Switch (min-width: 768px) */
+@media (min-width: 768px) {
+
+    /* Remove bottom mobile-nav padding from body */
+    body {
+        padding-bottom: 0;
+    }
+
+    .section-padding {
+        padding-block: 5.25rem;
+    }
+
+    /* Convert Mobile Bottom Nav into Standard Sticky Top Nav */
+    .main-nav {
+        position: static;
+        height: auto;
+        background-color: transparent;
+        border-top: none;
+        box-shadow: none;
+        padding-bottom: 0;
+    }
+
+    .nav-list {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        max-width: none;
+    }
+
+    .nav-link {
+        flex-direction: row;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        padding-block: 0.4rem;
+    }
+
+    /* Hide mobile app-bar icons on desktop for a traditional academic top bar */
+    .nav-icon {
+        display: none;
+    }
+
+    .nav-link.active::before {
+        top: auto;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        border-radius: 2px;
+    }
+
+    .header-cta {
+        display: inline-flex;
+    }
+
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    /* Lower WhatsApp button to standard bottom-right corner on desktop */
+    .whatsapp-float {
+        bottom: 1.75rem;
+        right: 1.75rem;
+        padding: 0.8rem 1.15rem;
+    }
+}
+
+/* Large Desktops (min-width: 992px) */
+@media (min-width: 992px) {
+    .hero-section {
+        padding-block: 5.5rem 6rem;
+    }
+
+    .about-container {
+        grid-template-columns: 5fr 7fr;
+        gap: 4rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contact-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2.75rem;
+    }
+
+    .contact-form-card,
+    .contact-details-card {
+        padding: 2.25rem;
+    }
+}
